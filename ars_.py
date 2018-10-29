@@ -14,6 +14,7 @@ SAVE_DIR = '{}/policies'.format(DIR_PATH)
 FILE_NAME_CVS = '{}/outfile.csv'.format(SAVE_DIR)
 
 
+# Utility class Hp with Hyperparameters
 class hyperParams():
     # Define Hyperparameters
     def __init__(self, nb_steps=1000,
@@ -21,7 +22,7 @@ class hyperParams():
                  learning_rate=0.01,
                  num_deltas=16,
                  num_best_deltas=16,
-                 noise=0.02,
+                 noise=0.025,
                  seed=123,
                  env_name='BipedalWalker-v2',
                  record_every=25):
@@ -37,7 +38,7 @@ class hyperParams():
         self.env_name = env_name
         self.record_every = record_every
 
-
+# Utility class Normalizer that normalize data
 class Normalizer():
     # Normalizes the inputs
     def __init__(self, nb_inputs):
@@ -88,6 +89,7 @@ class Policy():
     def read(self):
         self.theta = np.genfromtxt(FILE_NAME_CVS,delimiter=',')
 
+# Agent trained in the environment
 class ArsTrainer():
     def __init__(self,
                  hp=None,
@@ -125,7 +127,8 @@ class ArsTrainer():
             sum_rewards += reward
             num_plays += 1
         return sum_rewards
-
+    
+# Train model
     def train(self):
         for step in range(self.hp.nb_steps):
             # initialize the random noise deltas and the positive/negative rewards
